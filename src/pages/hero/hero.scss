@@ -1,0 +1,98 @@
+.hero-container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+
+    /* SPHERES */
+    .spheres-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .blue-sphere {
+        width: 600px;
+        height: 600px;
+        background: #37ace256;
+        border-radius: 9999px;
+    }
+
+    .yellow-sphere {
+        width: 600px;
+        height: 600px;
+        background: #fbd0514d;
+        border-radius: 9999px;
+    }
+
+    /* END SPHERES */
+
+    /* TEXTS */
+
+    .texts-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .title {
+        color: white;
+        font-family: "Outfit Variable", sans-serif;
+        font-size: 48px;
+        line-height: 60px;
+        font-weight: 800;
+    }
+
+    .subtitle {
+        color: white;
+        font-family: "Outfit Variable", sans-serif;
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: 400;
+    }
+
+    /* END TEXTS */
+
+    /* CTA */
+
+    .cta-btn {
+        width: 247px;
+        height: 40px;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Inter Variable', sans-serif;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 600;
+        color: rgb(255, 255, 255); 
+        background: #53B9E7;
+        opacity: 1;
+        border: none;
+        border-radius: 12px;
+        box-shadow:
+            0px 0px 1px #171a1f12,
+            0px 0px 2px #171a1f1f; 
+        cursor: pointer;
+    }
+ 
+    .cta-btn:hover {
+        color: #ffffffff; 
+        background: #37ace2;
+    }
+
+    .cta-btn:hover:active {
+        color: #ffffffff;
+        background: #37ace2;
+    }
+  
+    /* END CTA */
