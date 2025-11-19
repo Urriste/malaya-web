@@ -1,0 +1,11 @@
+---
+import './card.scss';
+---
+
+<div class="card-container">
+    <img src={Astro.props.image} alt={Astro.props.title} class="card-image" />
+    <div class="card-content">
+        <h3 class="card-title">{Astro.props.title}</h3>
+        <p class="card-description">{Astro.props.description}</p>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+.characteristics-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   background-color: #000000CC;
+
+    .characteristics-title {
+        font-family: "Outfit Variable", sans-serif;
+        font-size: 36px;
+        line-height: 40px;
+        font-weight: 700;
+        color: #FFFFFFFF;
+    }
+
+    .card-wrapper{
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        align-items: stretch;
+        flex-wrap: nowrap; 
+        --card-min-height: 220px;
+    }
+
+    @media (max-width: 1100px) {
+        .card-wrapper {
+            flex-wrap: wrap; 
+        }
+    }
+}

@@ -1,0 +1,50 @@
+* {
+    color: #FFFFFFFF;
+}
+
+
+.card-container {
+    min-width: 250px;
+    max-width: 270px;
+    background: #181B22FF;
+    border-radius: 14px;
+    border-width: 1px;
+    border-color: #323743FF;
+    border-style: solid;
+    box-shadow: 0px 0px 1px #171a1f12, 0px 0px 2px #171a1f1F;
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px; 
+    padding: 24px;
+    min-height: var(--card-min-height, 220px);
+    box-sizing: border-box;
+
+
+    .card-image {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        display: block;
+    }
+
+    .card-title {
+        font-family: "Outfit Variable", sans-serif;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 600;
+        margin: 0; 
+    }
+
+    .card-description {
+        font-family: 'Inter Variable', sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        color: #DEE1E6FF;
+        margin: 0; 
+    }
+}
