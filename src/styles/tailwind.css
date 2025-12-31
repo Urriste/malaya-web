@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #E5484D;
+  --color-bg-dark: #0F1012;
+  --color-surface-dark: #141517;
+  --color-surface-light: #1B1C20;
+  --color-border-subtle: #26272B;
+  --color-text-muted: #9CA3AF;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+* { scrollbar-color: var(--color-border-subtle) transparent; }

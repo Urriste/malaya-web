@@ -1,0 +1,155 @@
+---
+import "../styles/components/_navbar.scss";
+
+export interface LinkItem { label: string; href: string; }
+
+const {
+  brand = { name: "Malaya Web", icon: "code_blocks" },
+  links = [
+    { label: "Servicios", href: "#servicios" },
+    { label: "Precios", href: "#precios" },
+    { label: "Tiempos", href: "#tiempos" },
+    { label: "FAQ", href: "#faq" },
+    { label: "Contacto", href: "#contacto" },
+  ] as LinkItem[],
+  cta = { label: "Solicitar Presupuesto", href: "#contacto" },
+} = Astro.props as {
+  brand?: { name: string; icon?: string };
+  links?: LinkItem[];
+  cta?: { label: string; href: string };
+};
+---
+<nav class="mw-navbar mw-navbar--border w-full bg-background-dark/80" aria-label="Primary">
+  <div class="max-w-7xl container mx-auto px-6 mw-navbar__inner flex items-center justify-between">
+    <!-- Brand -->
+    <a href="/" class="flex items-center gap-3" aria-label={brand.name}>
+      <span class="material-symbols-outlined text-primary" style="font-size: 32px;">{brand.icon}</span>
+      <span class="text-xl font-bold tracking-tight text-white">{brand.name}</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="mw-desktop-nav hidden md:flex items-center gap-8">
+      {links.map((l) => (
+        <a href={l.href} class="text-sm font-medium text-text-muted hover:text-white transition-colors">{l.label}</a>
+      ))}
+    </div>
+
+    <!-- Desktop CTA -->
+    <div class="hidden md:block">
+      <a href={cta.href} class="inline-flex items-center justify-center h-10 px-6 rounded bg-primary hover:bg-red-700 text-white text-sm font-bold transition-colors">{cta.label}</a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button id="mw-nav-toggle" class="md:hidden text-white inline-flex items-center justify-center rounded p-2 focus:outline-none focus:ring-2 focus:ring-primary" aria-controls="mw-nav-sheet" aria-expanded="false">
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+      <span class="visually-hidden">Abrir menú</span>
+    </button>
+  </div>
+  <!-- Mobile overlay + sheet -->
+  <div id="mw-nav-overlay" class="mw-overlay md:hidden" aria-hidden="true">
+    <div id="mw-nav-sheet" class="mw-sheet md:hidden">
+      <!-- Sheet header with close button -->
+      <div class="flex items-center justify-between px-6 py-3 border-b border-border-subtle">
+        <span class="text-sm font-bold text-white">{brand.name}</span>
+        <button id="mw-nav-close" class="mw-close inline-flex items-center justify-center rounded p-2 focus:outline-none focus:ring-2 focus:ring-primary" aria-label="Cerrar menú">
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </div>
+
+      <div class="container max-w-7xl mx-auto px-6 py-4 space-y-2">
+        {links.map((l) => (
+          <a href={l.href} class="block px-2 py-2 rounded text-sm text-text-muted hover:text-white hover:bg-surface-dark transition-colors">{l.label}</a>
+        ))}
+        <a href={cta.href} class="mt-2 w-full h-10 px-6 rounded bg-primary hover:bg-red-700 text-white text-sm font-bold transition-colors flex items-center justify-center md:justify-start">{cta.label}</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const root = document.querySelector('nav.mw-navbar');
+  const btn = document.getElementById('mw-nav-toggle');
+  const overlay = document.getElementById('mw-nav-overlay');
+  const sheet = document.getElementById('mw-nav-sheet');
+  const closeBtn = document.getElementById('mw-nav-close');
+  const icon = btn?.querySelector('.material-symbols-outlined');
+
+  const setOpen = (open: boolean | undefined) => {
+    if (!root || !btn) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    root.setAttribute('data-open', open ? 'true' : 'false');
+    icon && (icon.textContent = open ? 'close' : 'menu');
+    document.body.classList.toggle('mw-lock-scroll', open);
+  };
+
+  if (root && btn) {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      setOpen(!expanded);
+    });
+
+    // Close on overlay click
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) setOpen(false);
+    });
+
+    // Close on ESC
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+
+    // Close when selecting a link in the sheet
+    sheet?.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => setOpen(false))
+    );
+
+    // Close button
+    closeBtn?.addEventListener('click', () => setOpen(false));
+
+    // Shadow on scroll
+    const onScroll = () => {
+      const scrolled = window.scrollY > 0;
+      root.classList.toggle('shadow-primary-soft', scrolled);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Active link highlight by hash + intersection observer
+    const allLinks = Array.from(root.querySelectorAll('a[href^="#"]'));
+    const setActiveByHash = () => {
+      const hash = window.location.hash || '';
+      allLinks.forEach((a) => {
+        const isActive = hash && a.getAttribute('href') === hash;
+        a.classList.toggle('mw-link--active', !!isActive);
+        a.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    };
+    setActiveByHash();
+    window.addEventListener('hashchange', setActiveByHash);
+
+    // IntersectionObserver to update active link while scrolling sections
+    const sections = allLinks
+      .map((a) => document.querySelector(a.getAttribute('href') || ''))
+      .filter((el) => !!el);
+    if (sections.length) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => (b.intersectionRatio - a.intersectionRatio));
+          const top = visible[0]?.target as HTMLElement | undefined;
+          if (top && top.id) {
+            const targetHash = `#${top.id}`;
+            allLinks.forEach((a) => {
+              const isActive = a.getAttribute('href') === targetHash;
+              a.classList.toggle('mw-link--active', !!isActive);
+              a.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+          }
+        },
+        { rootMargin: '-40% 0px -50% 0px', threshold: [0.25, 0.6] }
+      );
+      sections.forEach((s) => io.observe(s as Element));
+    }
+  }
+</script>

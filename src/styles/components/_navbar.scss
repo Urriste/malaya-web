@@ -1,0 +1,81 @@
+/* Malaya Web Navbar styles */
+.mw-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.mw-navbar__inner {
+  height: 5rem; 
+}
+.mw-link--active {
+  color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .mw-desktop-nav a {
+    position: relative;
+  }
+  .mw-desktop-nav a.mw-link--active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px; 
+    width: 16px;
+    height: 2px;
+    background: #E5484D; 
+    border-radius: 1px;
+    box-shadow: 0 6px 12px -4px rgba(229, 72, 77, 0.35);
+  }
+}
+
+
+.mw-navbar--border {
+  border-bottom: 1px solid #26272B;
+}
+
+.mw-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 16, 18, 0.6); 
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+[data-open="true"] .mw-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mw-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #0F1012; 
+  border-bottom: 1px solid #26272B; 
+  transform: translateY(-12px);
+  opacity: 0;
+  transition: transform .24s ease, opacity .24s ease;
+}
+
+[data-open="true"] .mw-sheet {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.mw-lock-scroll {
+  overflow: hidden;
+}
+
+.mw-close {
+  color: #9CA3AF; 
+}
+.mw-close:hover {
+  color: #ffffff;
+  background: #1B1C20;
+}
