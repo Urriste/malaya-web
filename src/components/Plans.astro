@@ -1,0 +1,112 @@
+---
+import '../styles/components/_plans.scss';
+
+interface PlanItem {
+  title: string;
+  priceLabel: string; // e.g., "$XXX" or "Consultar"
+  unit?: string;      // e.g., "/ pago único"
+  delivery: string;   // e.g., "Entrega en 72 horas"
+  features: string[];
+  ctaText: string;
+  ctaHref: string;
+  highlighted?: boolean;
+  badge?: string;     // e.g., "Más Popular"
+  fromLabel?: string; // e.g., "desde"
+}
+
+const defaultPlans: PlanItem[] = [
+  {
+    title: 'Sitio Empresarial',
+    priceLabel: '$500.000',
+    unit: '/ pago único',
+    delivery: 'Entrega en 7 días hábiles',
+    features: [
+      'Hasta 5 páginas internas',
+      'Optimización de velocidad',
+      'SEO Técnico Avanzado',
+      'Soporte personalizado',
+      'Configuración de Analytics',
+    ],
+    ctaText: 'Solicitar Presupuesto',
+    ctaHref: '#contacto',
+    fromLabel: 'desde',
+  },
+  {
+    title: 'Landing Express',
+    priceLabel: '$100.000',
+    unit: '/ pago único',
+    delivery: 'Entrega en 72 horas',
+    features: [
+      'Diseño Responsive (Móvil/Desktop)',
+      'SEO Básico incluido',
+      'Formulario de Contacto',
+    ],
+    ctaText: 'Elegir Landing',
+    ctaHref: '#contacto',
+    highlighted: true,
+    badge: 'Más Popular',
+  },
+  {
+    title: 'MVP Personalizado',
+    priceLabel: 'Consultar',
+    delivery: 'Entrega en 14-21 días',
+    features: [
+      'Diseño totalmente a medida',
+      'Funcionalidades custom (JS/API)',
+      'Integraciones complejas',
+      'Soporte prioritario post-lanzamiento',
+    ],
+    ctaText: 'Cotizar MVP',
+    ctaHref: '#contacto',
+  },
+];
+
+const { plans = defaultPlans, id = 'precios' } = Astro.props as {
+  plans?: PlanItem[];
+  id?: string;
+};
+---
+<section class="mw-plans-section py-24 px-6 max-w-7xl mx-auto" id={id} aria-labelledby={`${id}-title`}>
+  <div class="text-center mb-16">
+    <h2 id={`${id}-title`} class="mw-plans__title">Planes Simples y Transparentes</h2>
+    <p class="mw-plans__subtitle">Los plazos comienzan una vez que el contenido y el alcance están confirmados.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8" role="list">
+    {plans.map((p) => (
+      <article class={`mw-plan ${p.highlighted ? 'mw-plan--highlight' : 'mw-plan--default'}`} role="listitem">
+        {p.highlighted && p.badge && (
+          <div class="mw-plan__badge">{p.badge}</div>
+        )}
+
+        <h3 class="mw-plan__name">{p.title}</h3>
+
+        <div class="mw-plan__price">
+          {p.fromLabel && p.priceLabel.toLowerCase() !== 'consultar' && (
+            <span class="mw-plan__price-from">{p.fromLabel}</span>
+          )}
+          <span class="mw-plan__price-value">{p.priceLabel}</span>
+          {p.unit && (<span class="mw-plan__price-unit">{p.unit}</span>)}
+        </div>
+
+        <div class="mw-plan__delivery">
+          <span class="material-symbols-outlined mw-plan__delivery-icon">timer</span>
+          <span>{p.delivery}</span>
+        </div>
+
+        <ul class="mw-plan__features">
+          {p.features.map((f) => (
+            <li class="mw-plan__feature">
+              <span class="material-symbols-outlined mw-plan__check">check</span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+
+        <a href={p.ctaHref} class={`mw-plan__cta ${p.highlighted ? 'mw-plan__cta--primary' : 'mw-plan__cta--ghost'}`}>
+          {p.ctaText}
+        </a>
+      </article>
+    ))}
+  </div>
+</section>
