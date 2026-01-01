@@ -1,0 +1,46 @@
+---
+import '../styles/components/_services.scss';
+
+interface ServiceItem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const defaultItems: ServiceItem[] = [
+  { icon: 'web', title: 'Landing Pages', description: 'Páginas de aterrizaje de alta conversión diseñadas para campañas específicas.' },
+  { icon: 'domain', title: 'Sitios Corporativos', description: 'Presencia digital completa para tu empresa con múltiples secciones informativas.' },
+  { icon: 'brush', title: 'UI Refresh / Rediseño', description: 'Modernizamos tu sitio actual sin tener que reconstruirlo desde cero.' },
+  { icon: 'speed', title: 'Optimización Web', description: 'Mejoramos la velocidad de carga (Core Web Vitals) para no perder visitas.' },
+  { icon: 'build', title: 'Mantenimiento', description: 'Planes mensuales para que no te preocupes por actualizaciones o seguridad.' },
+  { icon: 'search', title: 'SEO Básico', description: 'Configuración inicial para que Google indexe tu sitio correctamente.' },
+];
+
+const {
+  id = 'servicios',
+  heading = 'Más allá del código',
+  subtitle = 'Servicios complementarios pensados para que tu negocio crezca sin complicaciones técnicas.',
+  items = defaultItems,
+} = Astro.props as {
+  id?: string;
+  heading?: string;
+  subtitle?: string;
+  items?: ServiceItem[];
+};
+---
+<section class="mw-services py-24 px-6 max-w-7xl mx-auto" id={id} aria-labelledby={`${id}-title`}>
+  <div class="mw-services__header">
+    <h2 id={`${id}-title`} class="mw-services__title">{heading}</h2>
+    <p class="mw-services__subtitle">{subtitle}</p>
+  </div>
+
+  <div class="mw-services__grid" role="list">
+    {items.map((s) => (
+      <article class="mw-service" role="listitem">
+        <span class="material-symbols-outlined mw-service__icon" aria-hidden="true">{s.icon}</span>
+        <h3 class="mw-service__name">{s.title}</h3>
+        <p class="mw-service__desc">{s.description}</p>
+      </article>
+    ))}
+  </div>
+</section>
