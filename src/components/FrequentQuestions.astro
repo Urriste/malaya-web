@@ -1,0 +1,132 @@
+---
+import '../styles/components/_frequent-questions.scss';
+
+interface FAQItem {
+  question: string;
+  content: string; 
+}
+
+const defaultItems: FAQItem[] = [
+  {
+    question: '¿Qué puede retrasar la entrega?',
+    content: `
+      <p>Trabajamos con plazos cortos, pero hay factores que dependen del ida y vuelta. El plazo empieza a correr cuando tenemos lo necesario para avanzar (contenido base y un OK inicial).</p>
+      <p>Lo que más suele retrasar:</p>
+      <ol>
+        <li>
+          <p><strong>1) Contenido pendiente</strong></p>
+          <p>Si faltan textos, logo, imágenes, precios, servicios o datos clave, podemos avanzar con contenido provisorio, pero la entrega final se mueve hasta recibir el material definitivo.</p>
+        </li>
+        <li>
+          <p><strong>2) Feedback lento o en tandas</strong></p>
+          <p>Si el feedback tarda varios días o llega “de a poco”, se estira el proyecto. Lo ideal es responder cada ronda de cambios en 24–48 hs.</p>
+        </li>
+        <li>
+          <p><strong>3) Cambios grandes o pedidos fuera del plan</strong></p>
+          <p>Por ejemplo: agregar páginas nuevas, rehacer la estructura, sumar funcionalidades, integraciones complejas, e-commerce, turnos, login, etc. En esos casos se re-cotiza y se ajusta el plazo antes de avanzar.</p>
+        </li>
+        <li>
+          <p><strong>4) Dependencias externas (dominio/hosting/cuentas)</strong></p>
+          <p>La publicación y algunas integraciones dependen de accesos a hosting, dominio o cuentas (Google/Meta). Si esos accesos no están a tiempo, el sitio puede quedar listo pero no publicado o sin medición configurada.</p>
+        </li>
+      </ol>
+    `,
+  },
+  {
+    question: '¿Ofrecen precios realmente fijos?',
+    content: `
+      <p><strong>Sí</strong>, el desarrollo del sitio se cotiza como pago único y precio fijo, porque cada plan tiene un alcance claro (páginas/secciones y funcionalidades incluidas).</p>
+      <p><strong>Desarrollo (pago único fijo)</strong> incluye lo que figura en el plan. Si el alcance se mantiene, el precio no cambia.</p>
+      <h4>Opcionales post-entrega (a elección del cliente)</h4>
+      <p>Además del desarrollo, podés sumar cualquiera de estas modalidades según lo que necesites:</p>
+      <ol>
+        <li>
+          <p><strong>1) Mantenimiento mensual (opcional)</strong></p>
+          <p>Ideal si querés que el sitio esté siempre actualizado y con alguien “a cargo”. Puede incluir: actualizaciones menores, chequeos, pequeños cambios de contenido y soporte.</p>
+        </li>
+        <li>
+          <p><strong>2) Cambios por intervención / por revisión (sin mensualidad)</strong></p>
+          <p>Si preferís no pagar todos los meses, se puede pedir “cambios puntuales” cuando los necesites (por hora o por tarea).</p>
+        </li>
+        <li>
+          <p><strong>3) Hosting + dominio / URL personalizada (opcional)</strong></p>
+          <p>Podemos ayudarte a dejar el sitio online con tu propia URL y administrar el hosting, con un costo mensual/anual según el proveedor.</p>
+        </li>
+      </ol>
+      <h4>Importante sobre dominio y hosting</h4>
+      <p>El dominio personalizado (ej: tusitio.com) y el costo del hosting no están incluidos en el precio del desarrollo.</p>
+      <p>Si ya tenés dominio/hosting, lo usamos sin problema. Si no tenés, te recomendamos opciones y lo gestionamos si lo pedís.</p>
+      <h4>¿Qué pasa si aparece algo fuera de alcance durante el desarrollo?</h4>
+      <p>Cualquier extra (páginas adicionales, integraciones avanzadas, e-commerce, panel/CMS, automatizaciones, etc.) se cotiza aparte antes de hacerlo, así no hay sorpresas.</p>
+    `,
+  },
+  {
+    question: '¿Cuántas revisiones se incluyen?',
+    content: `
+      <p>Incluimos revisiones para que el sitio quede prolijo, sin que el proyecto se vuelva infinito.</p>
+      <ul>
+        <li><strong>Landing Express:</strong> 1 ronda de cambios</li>
+        <li><strong>Sitio Empresarial:</strong> 2 rondas de cambios</li>
+        <li><strong>MVP Personalizado:</strong> revisiones por sprints (se define según alcance)</li>
+      </ul>
+      <h4>¿Qué cuenta como revisión?</h4>
+      <p>Ajustes dentro de lo ya armado: textos, imágenes, reordenar contenido, detalles visuales (espaciados, tamaños, colores), y pequeños retoques.</p>
+      <h4>¿Qué no entra como revisión incluida (o puede cambiar precio/plazo)?</h4>
+      <p>Rediseño completo, cambios estructurales grandes, páginas nuevas completas o funcionalidades nuevas.</p>
+    `,
+  },
+  {
+    question: '¿Qué necesitan de mí para empezar?',
+    content: `
+      <p>Para arrancar rápido y cumplir los plazos necesitamos lo básico (no tiene que estar perfecto).</p>
+      <h4>1) Contenido mínimo</h4>
+      <ul>
+        <li>Logo (si tenés) y nombre de marca</li>
+        <li>Textos (aunque sea borrador): qué hacés, para quién, servicios, llamada a la acción</li>
+        <li>Imágenes/fotos (o definimos si usamos stock)</li>
+        <li>Contacto: WhatsApp, mail y links a redes</li>
+      </ul>
+      <h4>2) Referencias + objetivo</h4>
+      <ul>
+        <li>2–3 sitios que te gusten (para entender estilo)</li>
+        <li>Objetivo del sitio: vender, recibir consultas, mostrar servicios/portfolio, etc.</li>
+      </ul>
+      <h4>3) Publicación</h4>
+      <ul>
+        <li>Si ya tenés dominio/hosting: accesos o invitación como colaborador</li>
+        <li>Si no tenés: te guiamos para comprar dominio/hosting, o lo gestionamos como servicio opcional</li>
+      </ul>
+      <h4>4) Medición (si se incluye en el plan)</h4>
+      <ul>
+        <li>Acceso a Google (o te ayudamos a crear GA4)</li>
+        <li>Instalación y verificación de que está midiendo</li>
+      </ul>
+    `,
+  },
+];
+
+const { id = 'faq', heading = 'Preguntas Frecuentes', items = defaultItems } = Astro.props as {
+  id?: string;
+  heading?: string;
+  items?: FAQItem[];
+};
+---
+<section class="mw-faq py-20 bg-surface-dark border-y border-border-subtle" id={id} aria-labelledby={`${id}-title`}>
+  <div class="mw-faq__container">
+    <div class="mw-faq__header">
+      <h2 id={`${id}-title`} class="mw-faq__title">{heading}</h2>
+    </div>
+
+    <div class="mw-faq__list">
+      {items.map((item) => (
+        <details class="mw-faq__item">
+          <summary class="mw-faq__summary">
+            <span class="mw-faq__question">{item.question}</span>
+            <span class="material-symbols-outlined mw-faq__chevron" aria-hidden="true">expand_more</span>
+          </summary>
+          <div class="mw-faq__content" set:html={item.content} />
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
