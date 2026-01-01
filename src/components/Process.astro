@@ -1,0 +1,69 @@
+---
+import '../styles/components/_process.scss';
+
+interface Step {
+  title: string;
+  description: string;
+  variant?: 'solid' | 'outline';
+}
+
+const defaultSteps: Step[] = [
+  {
+    title: 'Inicio',
+    description: 'Recibimos tu brief y contenido. Confirmamos alcance y fecha de entrega.',
+    variant: 'solid',
+  },
+  {
+    title: 'Primer Borrador',
+    description: 'Desarrollamos la estructura y diseño base para tu aprobación.',
+    variant: 'outline',
+  },
+  {
+    title: 'Revisiones',
+    description: 'Afinamos detalles. Incluimos hasta 2 rondas de ajustes rápidos.',
+    variant: 'outline',
+  },
+  {
+    title: 'Lanzamiento',
+    description: 'Publicamos tu sitio, configuramos dominio y te entregamos las llaves.',
+    variant: 'solid',
+  },
+];
+
+const { steps = defaultSteps, id = 'tiempos' } = Astro.props as {
+  steps?: Step[];
+  id?: string;
+};
+const arrowIndices = Array.from({ length: steps.length - 1 }, (_, i) => i);
+---
+<section class="mw-process bg-surface-dark border-y border-border-subtle py-20" id={id} aria-labelledby={`${id}-title`}>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <h2 id={`${id}-title`} class="mw-process__title">Proceso Ágil</h2>
+      <p class="mw-process__subtitle max-w-2xl mx-auto">Eliminamos la burocracia innecesaria. <br> Nuestro flujo de trabajo está diseñado para ir del punto A al B en tiempo récord.</p>
+    </div>
+
+    <div class="mw-process__track">
+      <div class="mw-process__arrows" aria-hidden="true">
+        {arrowIndices.map((i) => (
+          <span
+            class="material-symbols-outlined mw-process__arrow"
+            style={`--mw-arrow-pos:${(i + 1) / steps.length};`}
+          >
+            arrow_forward
+          </span>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10" role="list">
+        {steps.map((s) => (
+          <article class="mw-process__step" role="listitem">
+            <div class={`mw-process__dot ${s.variant === 'solid' ? 'mw-process__dot--solid' : 'mw-process__dot--outline'}`}></div>
+            <h3 class="mw-process__step-title">{s.title}</h3>
+            <p class="mw-process__step-desc">{s.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
