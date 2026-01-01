@@ -119,6 +119,10 @@ export async function POST({ request }: { request: Request }) {
   }
 }
 
+export function GET() {
+  return new Response('OK', { status: 200 });
+}
+
 function escapeHtml(input: string): string {
   return input
     .replaceAll('&', '&amp;')
