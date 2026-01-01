@@ -1,0 +1,43 @@
+.mw-hero {
+  position: relative;
+}
+.mw-hero__cursor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+  z-index: -1;
+  /* Subtle red glow following the pointer */
+  --r: 420px;
+  background: radial-gradient(
+    circle var(--r) at var(--x, 50%) var(--y, 50%),
+    rgba(229, 72, 77, 0.20),
+    rgba(229, 72, 77, 0.08) 35%,
+    rgba(229, 72, 77, 0.00) 60%
+  );
+  filter: blur(40px);
+}
+
+.mw-hero[data-hover="true"] .mw-hero__cursor { opacity: 1; }
+
+
+
+.mw-hero__decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.mw-hero__blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+}
+.mw-hero__blob--primary {
+  background: rgba(229, 72, 77, 0.08);
+}
+
+.mw-hero__btn {
+  border-radius: 0.75rem; 
+}
