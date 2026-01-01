@@ -1,0 +1,150 @@
+---
+import '../styles/components/_contact.scss';
+
+interface ContactProps {
+  id?: string;
+  heading?: string;
+  description?: string;
+  email?: string;
+  projectOptions?: string[];
+  endpoint?: string;
+}
+
+const defaultOptions = [
+  'Solo consulta / No sé qué necesito',
+  'Landing Express (1 página)',
+  'Sitio empresarial (hasta 5 páginas)',
+  'MVP / Web a medida',
+  'Rediseño de sitio existente',
+  'Optimización de velocidad (sitio existente)',
+  'Integración puntual (WhatsApp / Analytics / Formularios)',
+  'Mantenimiento / actualizaciones de contenido',
+];
+
+const {
+  id = 'contacto',
+  heading = 'Empezá tu proyecto hoy',
+  description = 'Completá el formulario y recibí un presupuesto preliminar en menos de 24 horas hábiles. Sin compromiso.',
+  email = 'hola@malayaweb.com',
+  projectOptions = defaultOptions,
+  endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || '',
+} = Astro.props as ContactProps;
+---
+<section id={id} class="mw-contact py-24 px-6 max-w-7xl mx-auto" aria-labelledby={`${id}-title`}>
+  <div class="mw-contact__grid">
+    <div class="mw-contact__intro">
+      <h2 id={`${id}-title`} class="mw-contact__title">{heading}</h2>
+      <p class="mw-contact__subtitle">{description}</p>
+
+      <div class="mw-contact__info">
+        <div class="mw-contact__info-item">
+          <div class="mw-contact__info-icon" aria-hidden="true">
+            <span class="material-symbols-outlined">mail</span>
+          </div>
+          <div class="mw-contact__info-text">
+            <p class="mw-contact__info-label">Email</p>
+            <a href={`mailto:${email}`} class="mw-contact__info-value">{email}</a>
+          </div>
+        </div>
+        {/** Nota: No agregamos el bloque de WhatsApp que estaba tachado en el diseño. */}
+      </div>
+    </div>
+
+    <div class="mw-contact__form-card">
+      <form class="mw-contact__form" action={endpoint} method="POST" novalidate aria-describedby={`${id}-note`}>
+        <input type="text" name="website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="mw-contact__field">
+          <label for={`${id}-name`} class="mw-contact__label">Nombre</label>
+          <input id={`${id}-name`} name="name" type="text" class="mw-contact__input" placeholder="Tu nombre" autocomplete="name" />
+          <p class="mw-contact__error" data-error="name"></p>
+        </div>
+        <div class="mw-contact__field">
+          <label for={`${id}-email`} class="mw-contact__label">Correo Electrónico</label>
+          <input id={`${id}-email`} name="email" type="email" class="mw-contact__input" placeholder="tu@empresa.com" autocomplete="email" />
+          <p class="mw-contact__error" data-error="email"></p>
+        </div>
+        <div class="mw-contact__field">
+          <label for={`${id}-project`} class="mw-contact__label">Tipo de Proyecto</label>
+          <div class="mw-contact__select-wrap">
+            <select id={`${id}-project`} name="project" class="mw-contact__select">
+              {projectOptions.map((opt) => (
+                <option value={opt}>{opt}</option>
+              ))}
+            </select>
+            <span class="material-symbols-outlined mw-contact__select-icon" aria-hidden="true">expand_more</span>
+          </div>
+          <p class="mw-contact__error" data-error="project"></p>
+        </div>
+        <div class="mw-contact__field">
+          <label for={`${id}-message`} class="mw-contact__label">Notas adicionales</label>
+          <textarea id={`${id}-message`} name="message" class="mw-contact__textarea" placeholder="Contanos brevemente sobre tu negocio..."></textarea>
+        </div>
+        <button type="submit" class="mw-contact__submit">Enviar Consulta</button>
+        <p id={`${id}-note`} class="mw-contact__note">Respondemos en 24 horas hábiles.</p>
+        <p class="mw-contact__success" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  const form = document.currentScript.previousElementSibling.querySelector('form');
+  const submitBtn = form.querySelector('.mw-contact__submit');
+  const successEl = form.querySelector('.mw-contact__success');
+  const fields = {
+    name: form.querySelector('input[name="name"]'),
+    email: form.querySelector('input[name="email"]'),
+    project: form.querySelector('select[name="project"]'),
+    website: form.querySelector('input[name="website"]'),
+  };
+
+  function setError(field, message) {
+    const input = fields[field];
+    const err = form.querySelector(`.mw-contact__error[data-error="${field}"]`);
+    if (message) {
+      input.setAttribute('aria-invalid', 'true');
+      err.textContent = message;
+      err.dataset.visible = 'true';
+    } else {
+      input.removeAttribute('aria-invalid');
+      err.textContent = '';
+      err.dataset.visible = 'false';
+    }
+  }
+
+  function validate() {
+    let ok = true;
+    setError('name');
+    setError('email');
+    setError('project');
+    if (!fields.name.value.trim()) { setError('name', 'Ingresá tu nombre.'); ok = false; }
+    const email = fields.email.value.trim();
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) { setError('email', 'Ingresá un correo válido.'); ok = false; }
+    if (!fields.project.value.trim()) { setError('project', 'Seleccioná un tipo de proyecto.'); ok = false; }
+    return ok;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    successEl.dataset.visible = 'false';
+    if (!validate()) return;
+    submitBtn.disabled = true;
+    const fd = new FormData(form);
+    try {
+      if (form.action) {
+        const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('Request failed');
+      } else {
+        await new Promise(r => setTimeout(r, 300));
+      }
+      successEl.textContent = '¡Gracias! Recibimos tu consulta.';
+      successEl.dataset.visible = 'true';
+      form.reset();
+    } catch (err) {
+      successEl.textContent = 'Ocurrió un error. Probá de nuevo más tarde.';
+      successEl.dataset.visible = 'true';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>
