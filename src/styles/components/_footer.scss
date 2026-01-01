@@ -1,0 +1,9 @@
+.mw-footer { border-top: 1px solid var(--color-border-subtle); background: var(--color-background-dark); }
+.mw-footer__inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0.75rem; }
+@media (min-width: 768px) { .mw-footer__inner { padding: 1.25rem 0.75rem; } }
+
+.mw-footer__left { display: inline-flex; align-items: center; gap: 0.5rem; }
+.mw-footer__logo { display: inline-block; }
+.mw-footer__brand { font-weight: 700; color: #fff; }
+
+.mw-footer__right { color: var(--color-text-muted); font-size: 0.875rem; }
