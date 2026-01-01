@@ -9,8 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/node": "^9.5.1",
     "@fontsource/material-symbols-outlined": "^5.2.30",
-    "astro": "^5.15.8"
+    "astro": "^5.15.8",
+    "resend": "^6.6.0",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",

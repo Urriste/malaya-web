@@ -30,7 +30,7 @@ const {
   endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || '',
 } = Astro.props as ContactProps;
 ---
-<section id={id} class="mw-contact py-24 px-6 max-w-7xl mx-auto" aria-labelledby={`${id}-title`}>
+<section id={id} class="mw-contact py-24 px-6 max-w-7xl mx-auto" aria-labelledby={`${id}-title`} data-component="mw-contact">
   <div class="mw-contact__grid">
     <div class="mw-contact__intro">
       <h2 id={`${id}-title`} class="mw-contact__title">{heading}</h2>
@@ -51,7 +51,7 @@ const {
     </div>
 
     <div class="mw-contact__form-card">
-      <form class="mw-contact__form" action={endpoint} method="POST" novalidate aria-describedby={`${id}-note`}>
+      <form id={`${id}-form`} class="mw-contact__form" action={endpoint} method="POST" novalidate aria-describedby={`${id}-note`}>
         <input type="text" name="website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="mw-contact__field">
           <label for={`${id}-name`} class="mw-contact__label">Nombre</label>
@@ -88,7 +88,8 @@ const {
 </section>
 
 <script type="module">
-  const form = document.currentScript.previousElementSibling.querySelector('form');
+  const section = document.querySelector('section[data-component="mw-contact"]');
+  const form = section?.querySelector('form');
   const submitBtn = form.querySelector('.mw-contact__submit');
   const successEl = form.querySelector('.mw-contact__success');
   const fields = {
@@ -133,7 +134,8 @@ const {
     try {
       if (form.action) {
         const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
-        if (!res.ok) throw new Error('Request failed');
+        const data = await res.json().catch(() => ({ ok: res.ok }));
+        if (!res.ok || data?.error) throw new Error(data?.error || 'Request failed');
       } else {
         await new Promise(r => setTimeout(r, 300));
       }

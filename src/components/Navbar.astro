@@ -24,7 +24,16 @@ const {
   <div class="max-w-7xl container mx-auto px-6 mw-navbar__inner flex items-center justify-between">
     <!-- Brand -->
     <a href="#mw-hero" class="flex items-center gap-3" aria-label={brand.name}>
-      <img src={logoSVG.src} width="64" height="64" alt="" class="select-none" />
+      <img
+        src={logoSVG.src}
+        width="64"
+        height="64"
+        alt="Logo"
+        class="select-none"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
       <span class="text-xl font-bold tracking-tight text-white">{brand.name}</span>
     </a>
 
