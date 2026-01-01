@@ -93,7 +93,7 @@ export async function POST({ request }: { request: Request }) {
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'Malaya Web <onboarding@resend.dev>',
+      from: 'Malaya Web <info@malayaweb.com>',
       to: ['hola@malayaweb.com'],
       replyTo: email || undefined,
       subject,
