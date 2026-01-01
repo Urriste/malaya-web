@@ -1,5 +1,6 @@
 ---
 import "../styles/components/_navbar.scss";
+import logoSVG from "../assets/logo.svg";
 
 export interface LinkItem { label: string; href: string; }
 
@@ -8,7 +9,7 @@ const {
   links = [
     { label: "Servicios", href: "#servicios" },
     { label: "Precios", href: "#precios" },
-    { label: "Tiempos", href: "#tiempos" },
+    { label: "Proceso", href: "#proceso" },
     { label: "FAQ", href: "#faq" },
     { label: "Contacto", href: "#contacto" },
   ] as LinkItem[],
@@ -22,8 +23,8 @@ const {
 <nav class="mw-navbar mw-navbar--border w-full bg-background-dark/80" aria-label="Primary">
   <div class="max-w-7xl container mx-auto px-6 mw-navbar__inner flex items-center justify-between">
     <!-- Brand -->
-    <a href="/" class="flex items-center gap-3" aria-label={brand.name}>
-      <span class="material-symbols-outlined text-primary" style="font-size: 32px;">{brand.icon}</span>
+    <a href="#mw-hero" class="flex items-center gap-3" aria-label={brand.name}>
+      <img src={logoSVG.src} width="64" height="64" alt="" class="select-none" />
       <span class="text-xl font-bold tracking-tight text-white">{brand.name}</span>
     </a>
 

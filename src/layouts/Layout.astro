@@ -2,6 +2,7 @@
 import Navbar from "../components/Navbar.astro";
 import "../styles/tailwind.css";
 import "../styles/global.scss";
+import logoSVG from "../assets/logo.svg";
 ---
 
 <!doctype html>
@@ -9,7 +10,7 @@ import "../styles/global.scss";
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={logoSVG.src} />
 		<meta name="generator" content={Astro.generator} />
 		<title>Malaya Web</title>
 	</head>
