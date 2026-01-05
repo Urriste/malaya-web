@@ -1,5 +1,4 @@
 export function getResendApiKey(): string {
-  // Use static access to avoid dynamic import.meta.env warnings
   const key = import.meta.env.RESEND_API_KEY || process.env?.RESEND_API_KEY;
   if (!key || typeof key !== "string" || key.trim().length === 0) {
     throw new Error(
